@@ -8,6 +8,8 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
+        sh '/bin/sh -c apt update'
+        sh '/bin/sh -c apt install docker.io '
         sh 'echo passed'
         //git branch: 'main', url: 'https://github.com/Fain17/test-repo.git'
       }
