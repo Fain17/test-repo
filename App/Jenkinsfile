@@ -44,10 +44,6 @@ pipeline {
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    ls -alps 
-                    cd App 
-                    ls -alps
-                    git config user.email "xyz@gmail.com"
                     git config user.name "Fain17"
                     BUILD_NUMBER=${BUILD_NUMBER}
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" App-manifests/deployment.yml
