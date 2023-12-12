@@ -40,7 +40,7 @@ pipeline {
         environment {
             GIT_REPO_NAME = "test-repo"
             GIT_USER_NAME = "Fain17"
-            P_BUILD_NUMBER = BUILD_NUMBER - 1
+            P_BUILD_NUMBER = $((BUILD_NUMBER - 1))
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
