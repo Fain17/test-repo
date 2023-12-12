@@ -40,11 +40,12 @@ pipeline {
         environment {
             GIT_REPO_NAME = "test-repo"
             GIT_USER_NAME = "Fain17"
-            P_BUILD_NUMBER = $((BUILD_NUMBER - 1))
+            
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
+                    P_BUILD_NUMBER = $((BUILD_NUMBER - 1))
                     git config --global --add safe.directory /var/lib/jenkins/workspace/test
                     git config --global user.email "xyz@gmail.com"
                     git config --global user.name "Fain17"
