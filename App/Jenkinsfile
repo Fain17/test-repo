@@ -40,6 +40,7 @@ pipeline {
         environment {
             GIT_REPO_NAME = "test-repo"
             GIT_USER_NAME = "Fain17"
+            P_BUILD_NUMBER = "${BUILD_NUMBER - 1}"
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
@@ -47,8 +48,8 @@ pipeline {
                     git config --global --add safe.directory /var/lib/jenkins/workspace/test
                     git config --global user.email "xyz@gmail.com"
                     git config --global user.name "Fain17"
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" App-manifests/deployment.yml
+                    sed -i "s/${P_BUILD_NUMBER}/${BUILD_NUMBER}/g" App-manifests/deployment.yml
+                    P_BUILD_NUMBER=${BUILD_NUMBER}
                     chown -R root App-manifests/deployment.yml
                     git add App-manifests/deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
