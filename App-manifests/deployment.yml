@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: dotnet-app
-        image: fain17/testapi-cicd:3
+        image: fain17/testapi-cicd:5
         ports:
         - containerPort: 8080
