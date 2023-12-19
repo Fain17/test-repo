@@ -22,6 +22,27 @@ pipeline {
         sh 'cd App && dotnet build -c Debug'
       }
     }
+    stage('Static Code Analysis') {
+      environment {
+        SONAR_URL = "http://3.110.42.131:9000"
+      }
+      steps {
+        withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+        	sh '''
+        	cd App
+        	dotnet tool install --global dotnet-sonarscanner
+        	cat << \EOF >> ~/.bash_profile
+        	# Add .NET Core SDK tools
+        	export PATH="$PATH:/root/.dotnet/tools"
+        	EOF
+        	export PATH="$PATH:/root/.dotnet/tools"
+        	dotnet sonarscanner begin /k:"sonar" /d:sonar.login=${SONAR_AUTH_TOKEN} /d:sonar.host.url="${SONAR_URL}"
+        	dotnet build 
+        	dotnet sonarscanner end /d:sonar.login="${SONAR_AUTH_TOKEN}" /d:sonar.host.url="${SONAR_URL}"
+        	'''        
+        }
+      }
+    }
     stage('Build and Push Docker Image') {
       environment {
         DOCKER_IMAGE = "fain17/testapi-cicd:${BUILD_NUMBER}"
