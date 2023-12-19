@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'fain17/dotnet-docker:v1'
+      image 'fain17/dotnet-docker:v3'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
@@ -30,12 +30,6 @@ pipeline {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
         	sh '''
         	cd App
-        	cat << EOF >> ~/.bash_profile
-          # Add .NET Core SDK tools
-          export PATH="$PATH:/root/.dotnet/tools"
-          EOF
-          export PATH="$PATH:/root/.dotnet/tools"
-          dotnet tool install --global dotnet-sonarscanner
         	dotnet sonarscanner begin /k:"sonar" /d:sonar.login=${SONAR_AUTH_TOKEN} /d:sonar.host.url="${SONAR_URL}"
         	dotnet build 
         	dotnet sonarscanner end /d:sonar.login="${SONAR_AUTH_TOKEN}" /d:sonar.host.url="${SONAR_URL}"
