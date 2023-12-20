@@ -30,6 +30,7 @@ pipeline {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
         	sh '''
         	cd App
+          chmod 755 ...sonar-scanner-4.3.0.2102-linux/jre/bin/java
         	dotnet sonarscanner begin /k:"sonar" /d:sonar.login="${SONAR_AUTH_TOKEN}" /d:sonar.host.url="${SONAR_URL}"
         	dotnet build 
         	dotnet sonarscanner end /d:sonar.login="${SONAR_AUTH_TOKEN}"
