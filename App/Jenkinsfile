@@ -9,6 +9,9 @@ pipeline {
      buildDiscarder(logRotator(numToKeepStr: '3'))
    //       skipDefaultCheckout(true)
       }
+  tools{
+     jdk 'Java 17'
+  }
   stages {
     stage('Checkout') {
       steps {
