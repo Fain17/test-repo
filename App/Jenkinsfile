@@ -19,6 +19,13 @@ pipeline {
         //git branch: 'main', url: 'https://github.com/Fain17/test-repo.git'
       }
     }
+    stage('Print JAVA_HOME') {
+            steps {
+                script {
+                    echo "JAVA_HOME: ${env.JAVA_HOME}"
+                }
+            }
+        }
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
