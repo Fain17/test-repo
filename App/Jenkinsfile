@@ -26,6 +26,14 @@ pipeline {
                 }
             }
         }
+  
+     stage('Print PATH') {
+            steps {
+                script {
+                    echo "PATH: ${env.PATH}"
+                }
+            }   
+        
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
