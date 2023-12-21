@@ -19,6 +19,17 @@ pipeline {
         //git branch: 'main', url: 'https://github.com/Fain17/test-repo.git'
       }
     }
+     stage('Add JAVA_HOME to PATH') {
+            steps {
+                script {
+                    // Add JAVA_HOME to the PATH
+                    withEnv(["PATH+JAVA=${env.JAVA_HOME}/bin"]) {
+                        // Your pipeline steps go here
+                        sh 'java -version'
+                        // Additional steps...
+                    }
+                }
+            }
     stage('Print JAVA_HOME') {
             steps {
                 script {
@@ -26,14 +37,6 @@ pipeline {
                 }
             }
         }
-  
-     stage('Run Java Version') {
-            steps {
-                script {
-                    sh 'java -version'
-                }
-            }
-     }
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
