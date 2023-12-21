@@ -30,6 +30,7 @@ pipeline {
                     }
                 }
             }
+     }
     stage('Print JAVA_HOME') {
             steps {
                 script {
