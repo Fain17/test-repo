@@ -23,9 +23,9 @@ pipeline {
     steps {
         script {
             sh "java -version"
+            }
         }
     }
-}
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
@@ -33,6 +33,15 @@ pipeline {
         sh 'cd App && dotnet build -c Debug'
       }
     }
+     stage('Build + SonarQube analysis') {
+      def sqScannerMsBuildHome = tool 'Scanner for .Net Framework'
+      withSonarQubeEnv('Sonarqube server') {
+        bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe begin /k:sonar"
+        bat 'MSBuild.exe /t:Rebuild'
+        bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
+      }
+    }
+    /*
     stage('Static Code Analysis') {
       environment {
         SONAR_URL = "http://13.127.60.252:9000"
@@ -48,7 +57,8 @@ pipeline {
         	'''        
         }
       }
-    }
+    }*/
+    
     stage('Build and Push Docker Image') {
       environment {
         DOCKER_IMAGE = "fain17/testapi-cicd:${BUILD_NUMBER}"
