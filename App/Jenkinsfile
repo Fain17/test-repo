@@ -34,13 +34,16 @@ pipeline {
       }
     }
      stage('Build + SonarQube analysis') {
-      def sqScannerMsBuildHome = tool 'Scanner for .Net Framework'
-      withSonarQubeEnv('Sonarqube server') {
-        bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe begin /k:sonar"
-        bat 'MSBuild.exe /t:Rebuild'
-        bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
-      }
+       steps{
+            def sqScannerMsBuildHome = tool 'Scanner for .Net Framework'
+            withSonarQubeEnv('Sonarqube server') {
+            bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe begin /k:sonar"
+            bat 'MSBuild.exe /t:Rebuild'
+            bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
+          }
+       }
     }
+       
     /*
     stage('Static Code Analysis') {
       environment {
