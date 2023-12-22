@@ -37,9 +37,9 @@ pipeline {
        def sqScannerMsBuildHome = tool 'Scanner for .Net Framework'
        steps{
             withSonarQubeEnv('Sonarqube server') {
-            bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe begin /k:sonar"
-            bat 'MSBuild.exe /t:Rebuild'
-            bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
+            sh "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe begin /k:sonar"
+            sh 'MSBuild.exe /t:Rebuild'
+            sh "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
           }
        }
     }
