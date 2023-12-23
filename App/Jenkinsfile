@@ -39,7 +39,7 @@ pipeline {
          script{
             def sqScannerMsBuildHome = tool 'dotnet_sonarscanner'
             withSonarQubeEnv('sonarqube_server') {
-            sh "${sqScannerMsBuildHome}/SonarScanner.MSBuild.exe begin /k:sonar"
+            sh "${sqScannerMsBuildHome}/sonar-scanner-5.0.1.3006/bin/sonar-scanner -DsonarprojectKey:sonar"
             sh 'MSBuild.exe /t:Rebuild'
             sh "${sqScannerMsBuildHome}/SonarScanner.MSBuild.exe end"
             }
