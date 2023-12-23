@@ -37,7 +37,7 @@ pipeline {
      stage('Build + SonarQube analysis') {
        steps{
          script{
-            def sqScannerMsBuildHome = tool 'Scanner for .Net Framework'
+            //def sqScannerMsBuildHome = tool 'Scanner for .Net Framework'
             withSonarQubeEnv('sonarqube_server') {
             println ${env.SONAR_HOST_URL}
             sh "${sqScannerMsBuildHome}/SonarScanner.MSBuild.exe begin /k:sonar"
