@@ -33,7 +33,7 @@ pipeline {
         sh 'cd App && dotnet build -c Debug'
       }
     }
-    
+    /*
      stage('Build + SonarQube analysis') {
        steps{
          script{
@@ -46,11 +46,11 @@ pipeline {
          }
        }
     }
-     
-    /*
+     */
+    
     stage('Static Code Analysis') {
       environment {
-        SONAR_URL = "http://13.233.70.83:9000"
+        SONAR_URL = "http://13.201.58.39:9000"
       }
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
@@ -64,7 +64,7 @@ pipeline {
         }
       }
     }
-    */
+    
     stage('Build and Push Docker Image') {
       environment {
         DOCKER_IMAGE = "fain17/testapi-cicd:${BUILD_NUMBER}"
