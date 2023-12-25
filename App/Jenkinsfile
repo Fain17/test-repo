@@ -33,12 +33,12 @@ pipeline {
         sh 'cd App && dotnet build -c Debug'
       }
     }
-    /*
+    
      stage('Build + SonarQube analysis') {
        steps{
          script{
-            def sqScannerMsBuildHome = tool 'dotnet_sonarscanner'
-            withSonarQubeEnv('sonarqube_server') {
+            def sqScannerMsBuildHome = tool 'dotnet-sonarscanner'
+            withSonarQubeEnv('sonarqube-server') {
             sh "${sqScannerMsBuildHome}/sonar-scanner-5.0.1.3006/bin/sonar-scanner -DsonarprojectKey:sonar"
             sh 'MSBuild.exe /t:Rebuild'
             sh "${sqScannerMsBuildHome}/SonarScanner.MSBuild.exe end"
@@ -46,8 +46,8 @@ pipeline {
          }
        }
     }
-     */
-    
+     
+    /*
     stage('Static Code Analysis') {
       environment {
         SONAR_URL = "http://13.233.70.83:9000"
@@ -64,7 +64,7 @@ pipeline {
         }
       }
     }
-    
+    */
     stage('Build and Push Docker Image') {
       environment {
         DOCKER_IMAGE = "fain17/testapi-cicd:${BUILD_NUMBER}"
