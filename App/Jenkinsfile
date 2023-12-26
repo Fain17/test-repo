@@ -57,7 +57,8 @@ pipeline {
         	sh '''
         	cd App
           java -version
-        	dotnet sonarscanner begin /k:"sonar" /d:sonar.login="${SONAR_AUTH_TOKEN}" /d:sonar.host.url="${SONAR_URL}"
+        	dotnet sonarscanner begin /k:"sonar" /d:sonar.login="${SONAR_AUTH_TOKEN}" /d:sonar.host.url="${SONAR_URL}" /d:sonar.java.security.properties=/usr/lib/jvm/java-17-openjdk-amd64/conf/security/java.security
+
         	dotnet build 
         	dotnet sonarscanner end /d:sonar.login="${SONAR_AUTH_TOKEN}"
         	'''        
